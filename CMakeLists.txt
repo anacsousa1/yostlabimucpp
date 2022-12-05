@@ -33,12 +33,22 @@ set(INCLUDE_FILES
 ######## executables
 ###############################################
 
-add_executable(Test
-    example/test.cpp
+add_executable(Set_color_wired
+    example/set_color_wired.cpp
     ${SOURCE_FILES}
 )
 
-target_include_directories(Test
+target_include_directories(Set_color_wired
+    PRIVATE
+    ${INCLUDE_FILES}
+)
+
+add_executable(Set_color_wireless
+    example/set_color_wireless.cpp
+    ${SOURCE_FILES}
+)
+
+target_include_directories(Set_color_wireless
     PRIVATE
     ${INCLUDE_FILES}
 )
