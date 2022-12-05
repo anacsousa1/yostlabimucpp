@@ -2,8 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 project(test_code)
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(Test
-    example/test.cpp
+set(SOURCE_FILES
     src/threespace_api_export.cpp
     src/threespace_api.cpp
     src/threespace_device.cpp
@@ -21,12 +20,35 @@ add_executable(Test
     src/serial/impl/win.cc
 )
 
-target_include_directories(Test
-    PRIVATE
+set(INCLUDE_FILES
     include/
     include/yost/
     include/rapidxml/
     include/serial/
     include/serial/impl
     include/serial/yost
+)
+
+###############################################
+######## executables
+###############################################
+
+add_executable(Test
+    example/test.cpp
+    ${SOURCE_FILES}
+)
+
+target_include_directories(Test
+    PRIVATE
+    ${INCLUDE_FILES}
+)
+
+add_executable(Get_info_wireless
+    example/get_info_wireless.cpp
+    ${SOURCE_FILES}
+)
+
+target_include_directories(Get_info_wireless
+    PRIVATE
+    ${INCLUDE_FILES}
 )
