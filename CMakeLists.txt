@@ -62,3 +62,13 @@ target_include_directories(Get_info_wireless
     PRIVATE
     ${INCLUDE_FILES}
 )
+
+add_executable(Get_info_wired
+    example/get_info_wired.cpp
+    ${SOURCE_FILES}
+)
+
+target_include_directories(Get_info_wired
+    PRIVATE
+    ${INCLUDE_FILES}
+)

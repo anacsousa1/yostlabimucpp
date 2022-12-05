@@ -14,10 +14,6 @@ int main(){
 	port.port_name = new char[64];
 	tss_device_id device_id;
 	TSS_ERROR error = TSS_NO_ERROR;
-
-	float red[3] = { 1.0f, 0.0f, 0.0f };
-	float blue[3] = { 0.0f, 0.0f, 1.0f };
-	float green[3] = { 0.0f, 1.0f, 1.0f };
 	
 	// Create sensor
 	printf("====Creating a Three Space Device from Search====\n");
@@ -37,38 +33,19 @@ int main(){
 		}else{
 			printf("==================================================\n");
 			printf("Created a TSS Sensor on %s!\n", port.port_name);
+            printf("====Starting Streaming====\n");
 
-			printf("Setting the LED color of the device to RED.\n");			
-			error = tss_sensor_setLEDColor(device_id, red, NULL);
-			if (!error)	{
-				printf("\tLED should be be RED\n");
-			}else{
-				printf("\tTSS_Error: %s\n", tss_error_string[error]);
+            error = tss_sensor_startStreamingWired(device_id, TSS_STREAM_TARED_ORIENTATION_AS_QUATERNION, 1000, TSS_STREAM_DURATION_INFINITE, 0);
+
+			TSS_Stream_Packet packet;
+            for (int i = 0; i < 10; i++){
+				printf("Press Enter to get next packet.\n");
+				getchar();
+				error = tss_sensor_getLastStreamingPacket(device_id, &packet);
+				printf("Quaternion: (%.03f,%.03f,%.03f,%.03f)\n", packet.taredOrientQuat[0], packet.taredOrientQuat[1], packet.taredOrientQuat[2], packet.taredOrientQuat[3]);
 			}
-			printf("Press enter to change LED color to Green.\n");
-			getchar();
 
-			printf("==================================================\n");
-			printf("Setting the LED color of the device to GREEN.\n");
-
-			error = tss_sensor_setLEDColor(device_id, green, NULL);
-			if (!error)	{
-				printf("\tLED should be be GREEN\n");
-			}else{
-				printf("\tTSS_Error: %s\n", tss_error_string[error]);
-			}
-			printf("Press enter to change LED color to Blue.\n");
-			getchar();
-			
-			printf("==================================================\n");
-			printf("Setting the LED color of the device to BLUE.\n");
-
-			error = tss_sensor_setLEDColor(device_id, blue, NULL);
-			if (!error)	{
-				printf("\tLED should be be BLUE\n");
-			}else{
-				printf("\tTSS_Error: %s\n", tss_error_string[error]);
-			}
+			tss_sensor_stopStreamingWired(device_id);			
 
 			printf("==================================================\n");
 			tss_removeSensor(device_id);
