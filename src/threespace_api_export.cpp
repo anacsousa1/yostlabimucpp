@@ -2883,6 +2883,7 @@ TSS_EXPORT TSS_ERROR tss_dongle_getWirelessSensor(tss_device_id dongle_id, U8 lo
 	TSS_ERROR_CHECK(stored_dongles[dongle_id]->getWirelessSensor(logical_id, sensor));
 
 	if (!sensor->isConnected())	{
+		printf("here\n");
 		return TSS_ERROR_NOT_CONNECTED;
 	}
 
@@ -3036,8 +3037,7 @@ TSS_EXPORT TSS_ERROR tss_dongle_getSerialNumberAtLogicalID(tss_device_id dongle_
 	return TSS_NO_ERROR;
 }
 
-TSS_EXPORT TSS_ERROR tss_dongle_setSerialNumberAtLogicalID(tss_device_id dongle_id, U8 logical_id, U32 serial_number, U32* timestamp)
-{
+TSS_EXPORT TSS_ERROR tss_dongle_setSerialNumberAtLogicalID(tss_device_id dongle_id, U8 logical_id, U32 serial_number, U32* timestamp){
 	DONGLE_RANGE_CHECK();
 
 	TSS_ERROR_CHECK(stored_dongles[dongle_id]->setSerialNumberAtLogicalID(logical_id, serial_number, timestamp));
