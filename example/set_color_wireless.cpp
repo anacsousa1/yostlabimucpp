@@ -57,51 +57,38 @@ int main(){
 					getchar();
 					return 0;
 				}else{
-					printf("==================================================\n");
-					printf("Getting the filtered tared quaternion orientation.(xyzw)\n");
-					float quat[4];
-					U32 timestamp;
+					//Change color
+						printf("Setting the LED color of the device to RED.\n");			
+						error = tss_sensor_setLEDColor(device_id, red, NULL);
+						if (!error)	{
+							printf("\tLED should be be RED\n");
+						}else{
+							printf("\tTSS_Error: %s\n", tss_error_string[error]);
+						}
+						printf("Press enter to change LED color to Green.\n");
+						getchar();
 
-					error = tss_sensor_getTaredOrientationAsQuaternion(device_id, quat, &timestamp);
-					if (!error)	{
-					printf("Quaternion: %f, %f, %f, %f Timestamp=%u\n", quat[0], quat[1], quat[2], quat[3], timestamp);
-					}else{
-						printf("TSS_Error: %s\n", tss_error_string[error]);
+						printf("==================================================\n");
+						printf("Setting the LED color of the device to GREEN.\n");
+
+						error = tss_sensor_setLEDColor(device_id, green, NULL);
+						if (!error)	{
+							printf("\tLED should be be GREEN\n");
+						}else{
+							printf("\tTSS_Error: %s\n", tss_error_string[error]);
+						}
+						printf("Press enter to change LED color to Blue.\n");
+						getchar();
+						
+						printf("==================================================\n");
+						printf("Setting the LED color of the device to BLUE.\n");
+
+						error = tss_sensor_setLEDColor(device_id, blue, NULL);
+						if (!error)	{
+							printf("\tLED should be be BLUE\n");
+						}else{
+							printf("\tTSS_Error: %s\n", tss_error_string[error]);
 					}
-
-					printf("==================================================\n");
-					printf("Getting the Corrected Component Sensor Data.\n");
-					float gyro[3];
-					float accel[3];
-					float compass[3];
-					error = tss_sensor_getCorrectedSensorData(device_id, gyro, accel, compass, NULL);
-					if (!error){
-						printf("Gyro:  %f, %f, %f\n", gyro[0], gyro[1], gyro[2]);
-						printf("Accel: %f, %f, %f\n", accel[0], accel[1], accel[2]);
-						printf("Comp:  %f, %f, %f\n", compass[0], compass[1], compass[2]);
-					}else{
-						printf("TSS_Error: %s\n", tss_error_string[error]);
-					}
-
-					printf("==================================================\n");
-					printf("Getting the LED color  of the device.\n");
-					float color[3];
-					error = tss_sensor_getLEDColor(device_id, color, NULL);
-					if (!error){
-						printf("Color: %f, %f, %f\n", color[0], color[1], color[2]);
-					}else{
-						printf("TSS_Error: %s\n", tss_error_string[error]);
-					}
-
-					printf("==================================================\n");
-					printf("Getting the battery percent remaining.\n");
-					U8 battery_percent;
-					error = tss_sensor_getBatteryPercentRemaining(device_id,&battery_percent,NULL);
-					if (!error){
-						printf("Battery: %d\n", battery_percent);
-					}else{
-						printf("TSS_Error: %s\n", tss_error_string[error]);
-					}					
 				}		
 			}		
 
